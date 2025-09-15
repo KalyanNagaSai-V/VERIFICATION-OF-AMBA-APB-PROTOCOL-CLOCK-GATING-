@@ -1,0 +1,37 @@
+interface apb_intf(input logic clk, rst);
+  logic pselx;
+    logic pwrite;
+ logic penable;
+  logic[31:0] paddr;
+  logic pready;
+  logic [31:0] prdata;
+  logic pslverr;
+  logic[31:0] pwdata;
+
+  clocking driver_cb@(posedge clk);//
+  default input #1 output #1;
+output pselx;
+ output  pwrite;
+output  penable;
+ output  paddr;
+  output pwdata;
+  input  prdata;
+  input  pready;
+  input pslverr;
+endclocking
+
+ 
+  clocking monitor_cb@(posedge clk);//
+  default input #1 output #1;
+input pselx;
+input  pwrite;
+input  penable;
+input  paddr;
+input  pready;   
+input  prdata;
+input pslverr;
+input pwdata;
+endclocking
+  modport DRIVER(clocking driver_cb,input clk,rst);
+    modport MONITOR(clocking monitor_cb, input clk,rst);
+    endinterface

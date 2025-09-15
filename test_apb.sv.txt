@@ -1,0 +1,8 @@
+`include"enviroment.sv"
+program test(apb_intf intf);
+  enviroment env;
+  initial begin
+    env=new(intf);
+    env.run();
+  end
+endprogram

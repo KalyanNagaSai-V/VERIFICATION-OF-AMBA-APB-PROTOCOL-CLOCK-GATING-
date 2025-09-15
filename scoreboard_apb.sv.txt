@@ -1,0 +1,34 @@
+class scoreboard;
+  mailbox  mon2scb;//output signals 
+  mailbox  gen2scb;//ip signals 
+    bit[31:0] mem [64];
+  bit[31:0]temp_mem;
+  function new( mailbox mon2scb,mailbox gen2scb);
+    this.mon2scb=mon2scb;
+    this.gen2scb=gen2scb;
+    foreach(mem[i])
+      mem[i]=32'h00;
+      endfunction
+      // main logic for comparing the data
+      
+      task main;
+        transaction t1,t2;
+        
+        forever begin
+   
+          mon2scb.get(t1);
+               if(t1.pwrite ==1'b0)
+          $display(t1.prdata,"hi");
+          /*
+          if(t1.pwrite ==1'b0)
+            begin
+              if( mem[t1.paddr]==t1.prdata)
+                $display("values are succesful\n");
+              else
+                $display("values are not %0d , data=%d", temp_mem,t2.prdata);
+            end
+            */
+        end
+      endtask
+endclass
+          

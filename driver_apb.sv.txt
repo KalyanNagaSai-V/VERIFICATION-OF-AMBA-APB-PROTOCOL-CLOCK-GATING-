@@ -1,0 +1,68 @@
+`define DRIV_IF apb_vif.DRIVER.driver_cb
+
+class driver;
+  virtual apb_intf apb_vif;
+    mailbox gen2driv;
+    transaction tr;
+    //constructor
+  function new(virtual apb_intf apb_vif, mailbox gen2driv);
+      //getting the interface
+      this.apb_vif=apb_vif;
+      this.gen2driv=gen2driv;//getting the mailbox handles from the enviroment
+      endfunction
+      //adding reset task to initiate the interface signals
+  task reset;
+ wait(!apb_vif.rst);
+ $display("reset started");
+  `DRIV_IF .pwrite<=0;
+ `DRIV_IF .pselx<=0;
+ `DRIV_IF.paddr<=0;
+`DRIV_IF.pwdata<=0;
+`DRIV_IF.penable<=0;
+ wait(apb_vif.rst);
+ $display("reset ended");       
+       endtask
+   
+task drive;
+    repeat(5) begin
+      gen2driv.get(tr);
+      write();
+    end
+    repeat(5) begin
+      gen2driv.get(tr);
+      read();
+    end
+endtask
+  
+    task write;
+        `DRIV_IF.pselx<=1;
+      @(posedge apb_vif.DRIVER.clk);
+        `DRIV_IF.pwrite<=1;
+         `DRIV_IF.paddr<=tr.paddr;
+       `DRIV_IF.pwdata<=tr.pwdata;
+        `DRIV_IF.penable<=0;
+       @(posedge apb_vif.DRIVER.clk);
+        `DRIV_IF.penable<=0;
+        `DRIV_IF.pwrite<=1;
+         `DRIV_IF.paddr<=tr.paddr;
+       `DRIV_IF.pwdata<=tr.pwdata;
+          endtask
+  
+  
+      task read;
+  `DRIV_IF.pselx<=1;
+      @(posedge apb_vif.DRIVER.clk);
+      `DRIV_IF.penable<=0;
+        `DRIV_IF.pwrite<=0;
+         `DRIV_IF.paddr<=tr.paddr;
+        @(posedge apb_vif.DRIVER.clk);
+       `DRIV_IF.penable<=1;
+        `DRIV_IF.pwrite<=0;
+         `DRIV_IF.paddr<=tr.paddr;
+        tr.prdata<=`DRIV_IF.prdata;
+    endtask
+  task main;
+    @(posedge apb_vif.DRIVER.clk);
+        drive();
+  endtask
+endclass

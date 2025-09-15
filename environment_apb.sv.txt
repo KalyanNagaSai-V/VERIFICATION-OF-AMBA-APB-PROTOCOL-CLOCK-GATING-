@@ -1,0 +1,46 @@
+`include"generator.sv"
+`include "driver.sv"
+`include"monitor.sv"
+`include"scoreboard.sv"
+class enviroment;
+  generator gen;
+  driver drv;
+  monitor mon;
+  scoreboard sb;
+  
+   mailbox mon2scb;
+  mailbox gen2drv;
+  mailbox gen2scb;
+  
+ virtual apb_intf apb_vif;
+  function new( virtual apb_intf apb_vif );
+      this.apb_vif = apb_vif;
+    gen2drv=new();
+    mon2scb=new();
+    gen2scb=new();
+    gen=new(gen2drv,gen2scb);
+    drv=new(apb_vif,gen2drv);
+    mon= new(apb_vif,mon2scb);
+    sb=new(mon2scb,gen2scb);
+  endfunction
+  task pre_test;
+    drv.reset();
+  endtask
+  
+  task test();
+   
+      gen.main();
+    fork
+      drv.main();
+      mon.main();
+    join_any
+    sb.main();
+  endtask
+  task run;
+    pre_test;
+    test();
+    $finish();
+  endtask
+  
+endclass
+    

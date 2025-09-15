@@ -1,0 +1,25 @@
+class transaction;
+rand bit pselx;
+rand bit penable;
+rand bit pwrite;
+rand bit [31:0] paddr;
+rand bit [31:0]pwdata;
+  bit clk;
+   bit rst;
+bit pready;
+bit [31:0] prdata;
+bit pslverr;
+
+  
+  constraint c1{
+    paddr inside {[10:20]};
+  }
+    
+      constraint c2{
+        pwdata inside {[50:100]};
+      }
+    function void display( string class_name);
+  $display(" ..............................[%s] ",class_name);
+      $display("pwrite =%b, pwdata=%d, paddr=%d,prdata=%d, ", pwrite,pwdata,paddr,prdata);
+  endfunction
+endclass
