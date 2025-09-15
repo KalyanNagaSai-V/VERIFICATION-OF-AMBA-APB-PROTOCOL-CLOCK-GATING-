@@ -1,0 +1,21 @@
+`include "transaction.sv"
+class generator;
+  rand transaction tr;
+  mailbox gen2driv;
+   mailbox  gen2scb;
+  
+  function new(mailbox gen2driv ,mailbox gen2scb);
+    this.gen2driv=gen2driv;
+    this.gen2scb=gen2scb;
+  endfunction
+  
+  task main();
+    repeat(10) begin
+      tr=new();
+      void'(tr.randomize());
+      gen2driv.put(tr);
+      gen2scb.put(tr);
+      tr.display("generator");
+    end
+  endtask
+endclass

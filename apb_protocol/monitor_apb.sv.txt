@@ -1,0 +1,36 @@
+//`include"transaction.sv"
+`define MON_IF apb_vif.MONITOR.monitor_cb
+class monitor;
+  virtual apb_intf apb_vif;
+  mailbox mon2scb;
+  function new(virtual apb_intf apb_vif, mailbox mon2scb);
+      //getting the interface
+      this.apb_vif=apb_vif;
+      this.mon2scb=mon2scb;//output of monitor is sent to scoreboard
+      endfunction
+  task main;
+   
+      transaction tr;
+      tr=new();
+      wait(apb_vif.rst);//wait till reset operaion is completed
+      @(posedge apb_vif.MONITOR.clk);
+        @(posedge apb_vif.MONITOR.clk);
+    if(`MON_IF.pwrite) begin
+          tr.paddr<=`MON_IF.paddr;
+          tr.pwrite<=`MON_IF.pwrite;
+         tr.pwdata<=`MON_IF.pwdata;
+         tr.penable<=`MON_IF.penable;
+         tr.pselx<=`MON_IF.pselx;
+      end
+      //
+    if(!`MON_IF.pwrite) begin
+          tr.paddr<=`MON_IF.paddr;
+          tr.pwrite<=`MON_IF.pwrite;
+         tr.prdata<=`MON_IF.prdata;
+         tr.penable<=`MON_IF.penable;
+         tr.pselx<=`MON_IF.pselx;
+      end
+      mon2scb.put(tr);
+      tr.display("MONITOR");
+  endtask
+endclass

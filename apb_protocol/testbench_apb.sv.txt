@@ -1,0 +1,20 @@
+`include"interface.sv"
+`include"test.sv"
+module testbench_top;
+  bit clk;
+  bit rst;
+  always #5 clk=~clk;
+  initial begin
+    rst=0;
+    #10 rst=1;
+  end
+  apb_intf intf(clk,rst);
+  test t1(intf);
+  apb_slave dut(.clk(intf.clk),.rst(intf.rst),.pselx(intf.pselx),.penable(intf.penable),.pwrite(intf.pwrite),.paddr(intf.paddr),.pready(intf.pready),.prdata(intf.prdata),.pslverr(intf.pslverr),.pwdata(intf.pwdata));
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars;
+    #1000;
+    $finish;
+  end
+endmodule
