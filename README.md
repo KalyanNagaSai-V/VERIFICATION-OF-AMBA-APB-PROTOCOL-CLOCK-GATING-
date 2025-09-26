@@ -82,15 +82,17 @@ PREADY = 0 → Wait state until slave ready.
 
 State Transition Flow:
 
-IDLE  -->  SETUP  -->  ACCESS  -->  IDLE (if done)
-                          |
-                          -->  SETUP (if next transfer)
+<img width="383" height="324" alt="image" src="https://github.com/user-attachments/assets/2597139b-06a0-4cc5-abcb-e2b0879b9eb2" />
+
 
 ## Methodology
 
 Design: APB protocol modeled in Verilog HDL with master-slave transactions.
 
 Clock Gating: Idle modules gated to minimize toggling.
+
+<img width="451" height="987" alt="image" src="https://github.com/user-attachments/assets/96466ace-1b8b-40a9-9f41-322f2426bb43" />
+
 
 Verification: Structured testbench with driver, monitor, reference model, scoreboard.
 
@@ -101,6 +103,8 @@ Analysis: Power and area analysis via Cadence Genus.
 Clock & Reset Generator
 
 APB Master (Generator + Driver + Output Monitor)
+
+<img width="970" height="511" alt="image" src="https://github.com/user-attachments/assets/2da7d964-6523-4b23-a1f5-504b778da1d6" />
 
 Design Under Test (APB Slave)
 
