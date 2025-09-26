@@ -1,63 +1,175 @@
-## Overview
+## Project Overview
 
-This project focuses on the design and verification of the AMBA APB (Advanced Peripheral Bus) protocol, which is widely used for connecting low-bandwidth peripherals in SoC designs. The project includes:
+This project presents the design and verification of the AMBA Advanced Peripheral Bus (APB) protocol using Verilog HDL.
+The focus is on low-power implementation through multi-level clock gating, ensuring energy efficiency without sacrificing performance or reliability.
 
-RTL Design of APB Master and Slave modules
+The APB protocol is part of the AMBA (Advanced Microcontroller Bus Architecture) and is widely used in System-on-Chip (SoC) designs for low-bandwidth peripheral communication.
 
-Functional Verification using SystemVerilog
+## Key Features
 
-Testbench Development with assertions, coverage, and sequences
+Verilog HDL Implementation of APB protocol.
 
-## Features
+Clock Gating Integration for dynamic power reduction.
 
-Fully synthesizable APB Master and Slave modules
+Master-Slave Communication model with read/write transactions.
 
-Implements APB read and write operations
+Power Optimization (power reduced from 0.682 mW → 0.567 mW).
 
-Supports PREADY, PSLVERR, and PSEL signals
+Testbench Architecture including driver, monitor, scoreboard, and reference model.
 
-Parameterized design for easy adaptation to various bus widths
+Simulation and Verification using EDA Playground and Xilinx Genus.
 
-Comprehensive UVM/SystemVerilog verification environment
+## Inputs and Outputs
+Inputs (to DUT / Slave from Master / System Bus)
 
-Assertion-based verification to ensure protocol compliance
+PCLK → Clock signal (synchronizes all transfers).
 
+PRESETn → Active-low reset.
 
-## Tools and Technologies
+PADDR → Address bus (8/16/32-bit configurable).
 
-Hardware Description Language: SystemVerilog
+PWRITE → Write control: 1 = Write, 0 = Read.
 
-Verification Methodology: UVM (Universal Verification Methodology)
+PWDATA → Data bus (for write operations).
 
-Simulation Tool: ModelSim/QuestaSim/Verilator (any standard simulator)
+PSEL → Peripheral Select (slave enable).
 
-Coding Standards: RTL and testbench follow industry-standard coding practices
+PENABLE → Enable signal (indicates ACCESS phase).
 
+PSTRB (optional) → Byte lane selection for writes.
 
-## Learning Outcomes
+Outputs (from DUT / Slave to Master)
 
-Understanding AMBA APB protocol timing and signal behavior
+PRDATA → Read data bus.
 
-Designing RTL modules for bus communication
+PREADY → Ready signal: 1 = Slave ready, 0 = Wait state.
 
-Developing verification environments with SystemVerilog/UVM
+PSLVERR → Error indicator: 0 = No error, 1 = Transfer error.
 
-Writing test sequences and functional coverage
+## Block Diagram
+        +-----------------+             +------------------+
+        |   APB Master    |             |   APB Slave(s)   |
+        | (Processor/CPU) |             | (UART, GPIO, etc)|
+        +-----------------+             +------------------+
+                |                                |
+      ----------- Signals -------------------------
+                |
+     PCLK, PRESETn, PADDR, PWRITE, PWDATA, PSEL, PENABLE
+                |
+     ----------------------------------------------
+                |
+     PRDATA, PREADY, PSLVERR (from Slave to Master)
 
-Debugging bus-level issues and verifying protocol compliance
+## APB Transfer Phases
 
-## References
+IDLE State 💤
 
-ARM AMBA Specification
+PSEL = 0, PENABLE = 0
 
-UVM User Guide and SystemVerilog LRM
+No transaction, bus inactive.
 
+SETUP State ⚙️
 
+PSEL = 1, PENABLE = 0
 
-__Hardware Description Language__: SystemVerilog
+Address (PADDR), control (PWRITE), and data (PWDATA if write) are driven.
 
-Verification Methodology: UVM (Universal Verification Methodology)
+ACCESS State 🚦
 
-Simulation Tools: ModelSim / QuestaSim / Verilator
+PSEL = 1, PENABLE = 1
 
-Coding Standards: RTL and testbench follow industry-standard best practices
+Data transfer occurs:
+
+Write → PWDATA sent to slave.
+
+Read → PRDATA sent from slave.
+
+PREADY = 1 → Transfer completes.
+
+PREADY = 0 → Wait state until slave ready.
+
+State Transition Flow:
+
+IDLE  -->  SETUP  -->  ACCESS  -->  IDLE (if done)
+                          |
+                          -->  SETUP (if next transfer)
+
+## Methodology
+
+Design: APB protocol modeled in Verilog HDL with master-slave transactions.
+
+Clock Gating: Idle modules gated to minimize toggling.
+
+Verification: Structured testbench with driver, monitor, reference model, scoreboard.
+
+Analysis: Power and area analysis via Cadence Genus.
+
+## Testbench Architecture
+
+Clock & Reset Generator
+
+APB Master (Generator + Driver + Output Monitor)
+
+Design Under Test (APB Slave)
+
+Input Monitor
+
+Reference Model
+
+Scoreboard
+
+## Results
+
+Power Consumption: Reduced by ~28.9% with clock gating.
+
+Area Overhead: ~9.3% due to clock gating.
+
+Verification: Read/write transfers validated with/without wait states.
+
+## Advantages
+
+Low latency and simple implementation.
+
+Easy integration into SoCs.
+
+Power-efficient with clock gating.
+
+Scalable for multiple peripherals.
+
+## Limitations
+
+Lower bandwidth than AXI/AHB.
+
+Limited scalability for large systems.
+
+No built-in error detection/recovery.
+
+ ## Applications
+
+Embedded systems (IoT, wearables, sensors).
+
+SoC peripheral communication.
+
+Low-power VLSI designs.
+
+🔮 Future Scope
+
+Hybrid integration with AXI/AHB.
+
+Ultra-low-power APB for IoT/wearables.
+
+Error detection (parity/CRC/ECC).
+
+Security enhancements for IoT.
+
+AI-driven adaptive optimization.
+
+## Tools & Technologies
+
+Languages: Verilog HDL
+
+Simulation: EDA Playground
+
+Synthesis & Analysis: Xilinx Genus, Cadence Genus
+
+Verification: SystemVerilog testbench
