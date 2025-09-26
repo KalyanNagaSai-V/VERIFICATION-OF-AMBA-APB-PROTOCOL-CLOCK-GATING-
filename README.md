@@ -22,28 +22,6 @@ Comprehensive UVM/SystemVerilog verification environment
 
 Assertion-based verification to ensure protocol compliance
 
-Project Structure
-APB-Design-Verification/
-│
-├── rtl/                # RTL source files
-│   ├── apb_master.sv
-│   ├── apb_slave.sv
-│   └── apb_pkg.sv
-│
-├── tb/                 # Testbench files
-│   ├── apb_env.sv
-│   ├── apb_driver.sv
-│   ├── apb_monitor.sv
-│   ├── apb_scoreboard.sv
-│   └── apb_test.sv
-│
-├── sim/                # Simulation scripts
-│   └── run_simulation.sh
-│
-├── docs/               # Documentation
-│   └── APB_Protocol_Design_Verification.pdf
-│
-└── README.md           # Project overview
 
 ## Tools and Technologies
 
