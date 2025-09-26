@@ -76,7 +76,7 @@ UVM User Guide and SystemVerilog LRM
 
 
 
-Hardware Description Language: SystemVerilog
+__Hardware Description Language__: SystemVerilog
 
 Verification Methodology: UVM (Universal Verification Methodology)
 
