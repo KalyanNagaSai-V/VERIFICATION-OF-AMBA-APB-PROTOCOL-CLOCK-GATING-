@@ -68,7 +68,7 @@ Writing test sequences and functional coverage
 
 Debugging bus-level issues and verifying protocol compliance
 
-References
+## References
 
 ARM AMBA Specification
 
