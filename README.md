@@ -1,4 +1,4 @@
-## Project Overview
+<img width="856" height="431" alt="image" src="https://github.com/user-attachments/assets/fb193696-a442-4fb9-9130-b68b8fe0148c" />## Project Overview
 
 This project presents the design and verification of the AMBA Advanced Peripheral Bus (APB) protocol using Verilog HDL.
 The focus is on low-power implementation through multi-level clock gating, ensuring energy efficiency without sacrificing performance or reliability.
@@ -115,6 +115,39 @@ Reference Model
 Scoreboard
 
 ## Results
+
+## APB Master-Slave Waveform
+<img width="1032" height="392" alt="image" src="https://github.com/user-attachments/assets/ac446d4d-6a83-4303-b312-3b156a4dc99a" />
+
+## APB Clock Gated Waveform
+<img width="1016" height="490" alt="image" src="https://github.com/user-attachments/assets/ad6c303b-28c1-4b7b-b34c-220512cf2511" />
+
+## APB Write without Wait
+<img width="1005" height="405" alt="image" src="https://github.com/user-attachments/assets/a7050eb4-6f5f-4075-9977-b4adf907062c" />
+
+## APB Write with Wait
+<img width="1002" height="344" alt="image" src="https://github.com/user-attachments/assets/df7c01cb-9f3e-4530-8bd2-892dacc2d67f" />
+
+
+## APB Read without Wait
+<img width="926" height="378" alt="image" src="https://github.com/user-attachments/assets/eafe5d67-6eff-424b-9e55-90c98647ff20" />
+
+## APB Read with Wait
+<img width="963" height="362" alt="image" src="https://github.com/user-attachments/assets/d4aa73e8-e03b-467a-a00b-d472711c859f" />
+
+## Testbench Output
+<img width="836" height="550" alt="image" src="https://github.com/user-attachments/assets/cfa17749-2279-4e51-ac46-9ff1e723678d" />
+
+
+## Conventional APB GUI
+<img width="856" height="431" alt="image" src="https://github.com/user-attachments/assets/d28c4acf-3db1-41c6-8021-c81fcd4e1585" />
+
+## Clock Gated APB GUI
+<img width="985" height="494" alt="image" src="https://github.com/user-attachments/assets/09c6c336-5a58-4053-a3d5-a275123bd972" />
+
+
+## Power Analysis
+<img width="865" height="415" alt="image" src="https://github.com/user-attachments/assets/46f96c2f-a0ab-430c-b148-2eb8161d26cf" />
 
 Power Consumption: Reduced by ~28.9% with clock gating.
 
