@@ -46,8 +46,10 @@ PREADY → Ready signal: 1 = Slave ready, 0 = Wait state.
 
 PSLVERR → Error indicator: 0 = No error, 1 = Transfer error.
 
-## Block Diagram
-    <img width="630" height="447" alt="image" src="https://github.com/user-attachments/assets/65718274-845f-403c-993b-b8a021bf60a0" />
+## Block Diagram 
+
+<img width="630" height="447" alt="image" src="https://github.com/user-attachments/assets/469faf5e-edee-4931-8c0c-3b7e39c86809" />
+
 
 
 ## APB Transfer Phases
