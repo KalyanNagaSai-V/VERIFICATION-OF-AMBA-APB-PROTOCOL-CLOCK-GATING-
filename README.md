@@ -1,4 +1,4 @@
-<img width="856" height="431" alt="image" src="https://github.com/user-attachments/assets/fb193696-a442-4fb9-9130-b68b8fe0148c" />## Project Overview
+## Overview
 
 This project presents the design and verification of the AMBA Advanced Peripheral Bus (APB) protocol using Verilog HDL.
 The focus is on low-power implementation through multi-level clock gating, ensuring energy efficiency without sacrificing performance or reliability.
