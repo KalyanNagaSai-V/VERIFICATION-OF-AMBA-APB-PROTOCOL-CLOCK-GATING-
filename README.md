@@ -47,18 +47,8 @@ PREADY → Ready signal: 1 = Slave ready, 0 = Wait state.
 PSLVERR → Error indicator: 0 = No error, 1 = Transfer error.
 
 ## Block Diagram
-        +-----------------+             +------------------+
-        |   APB Master    |             |   APB Slave(s)   |
-        | (Processor/CPU) |             | (UART, GPIO, etc)|
-        +-----------------+             +------------------+
-                |                                |
-      ----------- Signals -------------------------
-                |
-     PCLK, PRESETn, PADDR, PWRITE, PWDATA, PSEL, PENABLE
-                |
-     ----------------------------------------------
-                |
-     PRDATA, PREADY, PSLVERR (from Slave to Master)
+    <img width="630" height="447" alt="image" src="https://github.com/user-attachments/assets/65718274-845f-403c-993b-b8a021bf60a0" />
+
 
 ## APB Transfer Phases
 
